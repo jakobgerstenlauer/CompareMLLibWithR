@@ -24,10 +24,9 @@ val parsedData = data.map { line =>
 val numIterations = 100
 val stepSize = 0.00000001
 
-
 for( x <- 1 to 100){
  
-val lambda = 10.0/(x*x)
+val lambda = 10.0/x
 println("Lambda: " + lambda)
 
 val model = LassoWithSGD.train(parsedData, numIterations, stepSize, lambda)
@@ -41,6 +40,11 @@ val valuesAndPreds = parsedData.map { point =>
 val MSE = valuesAndPreds.map{ case(v, p) => math.pow((v - p), 2) }.mean()
 println("training Mean Squared Error = " + MSE)
 
+val global_mean = valuesAndPreds.map{ case(v, p) => v }.mean()
+val SQ_null = valuesAndPreds.map{ case(v,p) => math.pow((v - global_mean), 2) }.sum()
+val SQ = valuesAndPreds.map{ case(v, p) => math.pow((v - p), 2) }.sum()
+val R2 = (SQ_null - SQ) / SQ_null
+println("coefficient of determination: " + R2)
 }
 
 // Save and load model
