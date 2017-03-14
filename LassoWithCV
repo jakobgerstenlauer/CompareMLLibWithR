@@ -29,7 +29,7 @@ val numIterations = 10000
 val stepSize = 0.01
 val lambda = 0.1
  
-val model = LassoWithSGD().train(parsedData, numIterations, stepSize, lambda)
+val model = LassoWithSGD.train(parsedData, numIterations, stepSize, lambda)
 
 val pipeline = new Pipeline().setStages(Array(model)) 
 
