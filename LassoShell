@@ -8,6 +8,7 @@ import org.apache.spark.mllib.regression.LabeledPoint
 import org.apache.spark.mllib.regression.LinearRegressionModel
 import org.apache.spark.mllib.regression.LassoWithSGD
 
+//Check if a input line represents the header of the input file.
 def isHeader(line: String) = line.contains("output");
  
 var fileName = "foo.txt"
@@ -29,6 +30,7 @@ val stepSize = 0.01
 var best_lambda = -1.0
 var best_r2 = -1.0
 
+//Loop over grid of values for lambda.
 for( x <- 1 to 100){
  
 var lambda = 10.0/x
