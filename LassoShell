@@ -12,6 +12,7 @@ import org.apache.spark.mllib.regression.LassoWithSGD
 //Check if a input line represents the header of the input file.
 def isHeader(line: String) = line.contains("output");
  
+//TODO Put the file name and path!
 var fileName = "foo.txt"
 var path = "file:///home/.../data/"
 println("Reading data from file: " + fileName)
