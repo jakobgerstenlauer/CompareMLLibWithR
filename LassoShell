@@ -31,9 +31,9 @@ var best_lambda = -1.0
 var best_r2 = -1.0
 
 //Loop over grid of values for lambda.
-for( x <- 1 to 100){
+for( x <- 1 to 10){
  
-var lambda = 1.0/x
+var lambda = 1.0/(x*x)
 println("Lambda: " + lambda)
 
 val model = LassoWithSGD.train(parsedData, numIterations, stepSize, lambda)
