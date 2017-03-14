@@ -23,7 +23,13 @@ val parsedData = data.map { line =>
 // Building the model
 val numIterations = 100
 val stepSize = 0.00000001
-val model = LassoWithSGD.train(parsedData, numIterations, stepSize)
+
+
+for( var x <- 1 to 100){
+ 
+val lambda = 1.0/x
+
+val model = LassoWithSGD.train(parsedData, numIterations, stepSize, lambda)
 
 // Evaluate model on training examples and compute training error
 val valuesAndPreds = parsedData.map { point =>
@@ -33,6 +39,8 @@ val valuesAndPreds = parsedData.map { point =>
 
 val MSE = valuesAndPreds.map{ case(v, p) => math.pow((v - p), 2) }.mean()
 println("training Mean Squared Error = " + MSE)
+
+}
 
 // Save and load model
 //model.save(sc, "target/tmp/scalaLinearRegressionWithSGDModel")
