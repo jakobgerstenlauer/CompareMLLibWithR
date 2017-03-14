@@ -8,7 +8,8 @@ import org.apache.spark.mllib.regression.LabeledPoint
 import org.apache.spark.mllib.evaluation.RegressionMetrics
 import org.apache.spark.mllib.regression.LinearRegressionModel
 import org.apache.spark.mllib.regression.LassoWithSGD
-import org.apache.spark.ml.tuning.CrossValidator
+import org.apache.spark.ml.Pipeline
+import org.apache.spark.ml.tuning.{ParamGridBuilder, CrossValidator}
 
 //Check if a input line represents the header of the input file.
 def isHeader(line: String) = line.contains("output");
@@ -26,9 +27,11 @@ val parsedData = data.map { line =>
 // Building the model
 val numIterations = 10000
 val stepSize = 0.01
-val lambda = 1
+val lambda = 0.1
  
-val model = LassoWithSGD.train(parsedData, numIterations, stepSize, lambda)
+val model = LassoWithSGD().train(parsedData, numIterations, stepSize, lambda)
+
+val pipeline = new Pipeline().setStages(Array(model)) 
 
 // Evaluate model on training examples and compute training error
 val valuesAndPreds = parsedData.map { point =>
@@ -44,7 +47,7 @@ val metrics = new RegressionMetrics(valuesAndPreds)
 val paramGrid = new ParamGridBuilder().addGrid(model.regParam, (0.0 to 1.0 by 0.01).toArray).build()
   
 val cv = new CrossValidator()
-  .setEstimator(model)
+  .setEstimator(pipeline)
   .setEvaluator(metrics)
   .setEstimatorParamMaps(paramGrid)
   .setNumFolds(5)
