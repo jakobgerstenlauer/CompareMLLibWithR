@@ -51,7 +51,23 @@ val global_mean = valuesAndPreds.map{ case(v, p) => v }.mean()
 val SQ_null = valuesAndPreds.map{ case(v,p) => math.pow((v - global_mean), 2) }.sum()
 val SQ = valuesAndPreds.map{ case(v, p) => math.pow((v - p), 2) }.sum()
 var R2 = (SQ_null - SQ) / SQ_null
-println("coefficient of determination: " + R2)
+println("coefficient of determination by hand: " + R2)
+
+// Instantiate metrics object
+val metrics = new RegressionMetrics(valuesAndPreds)
+
+// Squared error
+println(s"MSE = ${metrics.meanSquaredError}")
+println(s"RMSE = ${metrics.rootMeanSquaredError}")
+
+// R-squared
+println(s"R-squared = ${metrics.r2}")
+
+// Mean absolute error
+println(s"MAE = ${metrics.meanAbsoluteError}")
+
+// Explained variance
+println(s"Explained variance = ${metrics.explainedVariance}")
 
 if(R2 > best_r2){
  best_lambda = lambda;
