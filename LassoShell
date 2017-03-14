@@ -10,8 +10,8 @@ import org.apache.spark.mllib.regression.LinearRegressionWithSGD
 
 def isHeader(line: String) = line.contains("output");
  
-var fileName = 'foo.txt'
-var path = 'file:///home/.../data/'
+var fileName = "foo.txt"
+var path = "file:///home/.../data/"
 println("Reading data from file: " + fileName)
 val data = sc.textFile(path + fileName).filter(!is.Header(_))
 
@@ -23,7 +23,7 @@ val parsedData = data.map { line =>
 // Building the model
 val numIterations = 100
 val stepSize = 0.00000001
-val model = LinearRegressionWithSGD.train(parsedData, numIterations, stepSize)
+val model = LassoWithSGD.train(parsedData, numIterations, stepSize)
 
 // Evaluate model on training examples and compute training error
 val valuesAndPreds = parsedData.map { point =>
