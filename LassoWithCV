@@ -8,6 +8,7 @@ import org.apache.spark.mllib.regression.LabeledPoint
 import org.apache.spark.mllib.evaluation.RegressionMetrics
 import org.apache.spark.mllib.regression.LinearRegressionModel
 import org.apache.spark.mllib.regression.LassoWithSGD
+import org.apache.spark.ml.tuning.CrossValidator
 
 //Check if a input line represents the header of the input file.
 def isHeader(line: String) = line.contains("output");
