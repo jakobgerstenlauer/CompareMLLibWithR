@@ -46,7 +46,7 @@ val valuesAndPreds = parsedData.map { point =>
 }
 
 val MSE = valuesAndPreds.map{ case(v, p) => math.pow((v - p), 2) }.mean()
-println("training Mean Squared Error = " + MSE)
+println("training Mean Squared Error by hand: " + MSE)
 
 val global_mean = valuesAndPreds.map{ case(v, p) => v }.mean()
 val SQ_null = valuesAndPreds.map{ case(v,p) => math.pow((v - global_mean), 2) }.sum()
@@ -76,8 +76,4 @@ if(R2 > best_r2){
 }
 
 }
-
-// Save and load model
-//model.save(sc, "target/tmp/scalaLinearRegressionWithSGDModel")
-//val sameModel = LinearRegressionModel.load(sc, "target/tmp/scalaLinearRegressionWithSGDModel")
 
