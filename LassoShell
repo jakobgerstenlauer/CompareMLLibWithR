@@ -24,6 +24,11 @@ val parsedData = data.map { line =>
 val numIterations = 10000
 val stepSize = 0.01
 
+//Store the optimal value of the regularization parameter lambda 
+//and the associated coefficient of determination:
+var best_lambda = -1
+var best_r2 = -1
+
 for( x <- 1 to 100){
  
 val lambda = 10.0/x
@@ -45,6 +50,12 @@ val SQ_null = valuesAndPreds.map{ case(v,p) => math.pow((v - global_mean), 2) }.
 val SQ = valuesAndPreds.map{ case(v, p) => math.pow((v - p), 2) }.sum()
 val R2 = (SQ_null - SQ) / SQ_null
 println("coefficient of determination: " + R2)
+
+if(R2 > best_r2){
+ best_lambda = lambda;
+ best_r2 = R2;
+}
+
 }
 
 // Save and load model
