@@ -13,7 +13,7 @@ def isHeader(line: String) = line.contains("output");
 var fileName = "foo.txt"
 var path = "file:///home/.../data/"
 println("Reading data from file: " + fileName)
-val data = sc.textFile(path + fileName).filter(!is.Header(_))
+val data = sc.textFile(path + fileName).filter(!isHeader(_))
 
 val parsedData = data.map { line =>
   val parts = line.split(';')
