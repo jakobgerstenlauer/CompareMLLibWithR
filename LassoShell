@@ -26,12 +26,12 @@ val stepSize = 0.01
 
 //Store the optimal value of the regularization parameter lambda 
 //and the associated coefficient of determination:
-var best_lambda = -1
-var best_r2 = -1
+var best_lambda = -1.0
+var best_r2 = -1.0
 
 for( x <- 1 to 100){
  
-val lambda = 10.0/x
+var lambda = 10.0/x
 println("Lambda: " + lambda)
 
 val model = LassoWithSGD.train(parsedData, numIterations, stepSize, lambda)
@@ -48,7 +48,7 @@ println("training Mean Squared Error = " + MSE)
 val global_mean = valuesAndPreds.map{ case(v, p) => v }.mean()
 val SQ_null = valuesAndPreds.map{ case(v,p) => math.pow((v - global_mean), 2) }.sum()
 val SQ = valuesAndPreds.map{ case(v, p) => math.pow((v - p), 2) }.sum()
-val R2 = (SQ_null - SQ) / SQ_null
+var R2 = (SQ_null - SQ) / SQ_null
 println("coefficient of determination: " + R2)
 
 if(R2 > best_r2){
