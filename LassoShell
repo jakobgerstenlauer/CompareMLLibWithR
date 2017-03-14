@@ -21,8 +21,8 @@ val parsedData = data.map { line =>
 }.cache()
 
 // Building the model
-val numIterations = 100
-val stepSize = 0.00000001
+val numIterations = 10000
+val stepSize = 0.01
 
 for( x <- 1 to 100){
  
