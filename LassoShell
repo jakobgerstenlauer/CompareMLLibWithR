@@ -28,6 +28,7 @@ val stepSize = 0.00000001
 for( var x <- 1 to 100){
  
 val lambda = 1.0/x
+println("Lambda: " + lambda)
 
 val model = LassoWithSGD.train(parsedData, numIterations, stepSize, lambda)
 
