@@ -16,9 +16,15 @@ import org.apache.spark.mllib.util.MLUtils
 //Check if a input line represents the header of the input file.
 def isHeader(line: String) = line.contains("output");
  
-//TODO Put the file name and path!
-var fileName = "foo.txt"
+//TODO Put the path!
 var path = "file:///home/.../data/"
+
+//read a file that contains the names of all input files
+val dataFileNames = sc.textFile(path + "fileNames.txt")
+
+//iterate over the file names:
+for( fileName <- dataFileNames){
+
 println("Reading data from file: " + fileName)
 val data = sc.textFile(path + fileName).filter(!isHeader(_))
 
@@ -77,5 +83,6 @@ if(avgError < min_error){
  min_error = avgError;
 }
 
+}
 }
 
