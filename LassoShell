@@ -97,10 +97,6 @@ if(avgError < min_error){
 
 }
 
-var lambdas:Array[Double] = new Array[Double](numFiles)
-var mses:Array[Double] = new Array[Double](numFiles)
-var fileNames:Array[String] = new Array[String](numFiles)
-
 lambdas(i) = best_lambda
 mses(i) = min_error
 fileNames(i) = fileName
