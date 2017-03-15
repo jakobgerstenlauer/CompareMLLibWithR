@@ -44,7 +44,7 @@ println("Lambda: " + lambda)
 //a complement of the validation data and the second element, the validation data, containing a unique 1/kth of the data.
 var numberOfFolds = 10
 var seed = 21937
-dataInFolds = kFold(parsedData, numberOfFolds, seed)
+val dataInFolds = MLUtils.kFold(parsedData, numberOfFolds, seed)
 
 val modelErrors = dataInFolds.map { case (train, test) => {
 
