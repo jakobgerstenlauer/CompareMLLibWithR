@@ -13,16 +13,17 @@ import org.apache.spark.mllib.regression.LinearRegressionModel
 import org.apache.spark.mllib.regression.LassoWithSGD
 import org.apache.spark.mllib.util.MLUtils
 import java.io._
+import scala.io.Source
 
 //Check if a input line represents the header of the input file.
 def isHeader(line: String) = line.contains("output");
  
 //TODO Put the path!
-var path = "file:///home/.../data/"
+var path = "/home/.../data/"
 
 //read a file that contains the names of all input files
-val dataFileNames = sc.textFile(path + "fileNames.txt")
-val numFiles = dataFileNames.count().toInt
+var fileNames:Array[String] = Source.fromFile(path + "fileNames").getLines.toArray
+val numFiles = fileNames.length
 
 //new log file with results for each file
 val pw = new PrintWriter(new File("Results.txt" ))
@@ -31,14 +32,13 @@ pw.write("inputFile;lambda;MSE")
 
 var lambdas:Array[Double] = new Array[Double](numFiles)
 var mses:Array[Double] = new Array[Double](numFiles)
-var fileNames:Array[String] = new Array[String](numFiles)
 
 var i = 0;
 //iterate over the file names:
-for( fileName <- dataFileNames){
+for( fileName <- fileNames){
 
 println("Reading data from file: " + fileName)
-val data = sc.textFile(path + fileName).filter(!isHeader(_))
+val data = sc.textFile(path + fileName.toString).filter(!isHeader(_))
 
 val parsedData = data.map { line =>
   val parts = line.split(';')
@@ -99,7 +99,6 @@ if(avgError < min_error){
 
 lambdas(i) = best_lambda
 mses(i) = min_error
-fileNames(i) = fileName
 i=i+1
 }
 
