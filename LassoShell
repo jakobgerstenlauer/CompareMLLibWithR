@@ -45,6 +45,8 @@ var min_error = 100000.0
 
 //new log file with results for each file
 val pw = new PrintWriter(new File("Results.txt" ))
+//write header
+pw.write("inputFile;lambda;MSE")
 
 //Loop over a grid of values for lambda.
 for( x <- 1 to 10){
@@ -89,7 +91,7 @@ if(avgError < min_error){
 
 }
 
-pw.write(fileName, best_lambda, min_error)
+pw.write(fileName+";"+best_lambda+";"+min_error)
 
 }
 pw.close
