@@ -1,5 +1,8 @@
 //This code is based on a code snippet from: 
 //https://spark.apache.org/docs/1.1.0/mllib-linear-methods.html#linear-least-squares-lasso-and-ridge-regression
+//I also used the approach to cross-validation discussed here:
+//http://apache-spark-user-list.1001560.n3.nabble.com/How-to-use-K-fold-validation-in-spark-1-0-td8142.html
+
 import org.apache.spark.SparkContext
 import org.apache.spark.SparkContext._
 import org.apache.spark.SparkConf
@@ -33,7 +36,7 @@ val stepSize = 0.01
 var best_lambda = -1.0
 var min_error = 100000.0
 
-//Loop over grid of values for lambda.
+//Loop over a grid of values for lambda.
 for( x <- 1 to 10){
  
 var lambda = 1.0/(x*x)
@@ -67,6 +70,8 @@ val modelErrors = dataInFolds.map { case (train, test) => {
 //Average error:
 var avgError = modelErrors.map(_._2).reduce(_ + _) / modelErrors.length
 
+//Here I update the optimal setting for lambda 
+//and the minimum for the mean squared error
 if(avgError < min_error){
  best_lambda = lambda;
  min_error = avgError;
