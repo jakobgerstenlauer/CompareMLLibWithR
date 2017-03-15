@@ -65,7 +65,7 @@ val modelErrors = dataInFolds.map { case (train, test) => {
 }}
 
 //Average error:
-val avgError = modelErrors.map(_._2).reduce(_ + _) / modelErrors.length
+var avgError = modelErrors.map(_._2).reduce(_ + _) / modelErrors.length
 
 if(avgError < min_error){
  best_lambda = lambda;
