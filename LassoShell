@@ -14,12 +14,12 @@ import org.apache.spark.mllib.regression.LassoWithSGD
 import org.apache.spark.mllib.util.MLUtils
 import java.io._
 import scala.io.Source
+ 
+//TODO Define the path to your data:
+//var path = "/home/.../data/"
 
 //Check if a input line represents the header of the input file.
 def isHeader(line: String) = line.contains("output");
- 
-//TODO Put the path!
-var path = "/home/.../data/"
 
 //read a file that contains the names of all input files
 var fileNames:Array[String] = Source.fromFile(path + "fileNames.txt").getLines.toArray
