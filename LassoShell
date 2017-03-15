@@ -31,7 +31,7 @@ val stepSize = 0.01
 //Store the optimal value of the regularization parameter lambda 
 //and the associated coefficient of determination:
 var best_lambda = -1.0
-var min_error = 100000
+var min_error = 100000.0
 
 //Loop over grid of values for lambda.
 for( x <- 1 to 10){
