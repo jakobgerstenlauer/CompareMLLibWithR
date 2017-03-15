@@ -8,6 +8,7 @@ import org.apache.spark.mllib.regression.LabeledPoint
 import org.apache.spark.mllib.evaluation.RegressionMetrics
 import org.apache.spark.mllib.regression.LinearRegressionModel
 import org.apache.spark.mllib.regression.LassoWithSGD
+import org.apache.spark.mllib.util.MLUtils
 
 //Check if a input line represents the header of the input file.
 def isHeader(line: String) = line.contains("output");
@@ -30,7 +31,7 @@ val stepSize = 0.01
 //Store the optimal value of the regularization parameter lambda 
 //and the associated coefficient of determination:
 var best_lambda = -1.0
-var best_r2 = -1.0
+var min_error = 100000
 
 //Loop over grid of values for lambda.
 for( x <- 1 to 10){
@@ -38,42 +39,37 @@ for( x <- 1 to 10){
 var lambda = 1.0/(x*x)
 println("Lambda: " + lambda)
 
-val model = LassoWithSGD.train(parsedData, numIterations, stepSize, lambda)
+//def kFold[T](rdd: RDD[T], numFolds: Int, seed: Int)(implicit arg0: ClassTag[T]): Array[(RDD[T], RDD[T])]
+//Return a k element array of pairs of RDDs with the first element of each pair containing the training data, 
+//a complement of the validation data and the second element, the validation data, containing a unique 1/kth of the data.
+var numberOfFolds = 10
+var seed = 21937
+dataInFolds = kFold(parsedData, numberOfFolds, seed)
 
-// Evaluate model on training examples and compute training error
-val valuesAndPreds = parsedData.map { point =>
-  val prediction = model.predict(point.features)
-  (point.label, prediction)
-}
+val modelErrors = dataInFolds.map { case (train, test) => {
 
-val MSE = valuesAndPreds.map{ case(v, p) => math.pow((v - p), 2) }.mean()
-println("training Mean Squared Error by hand: " + MSE)
+  //fit the model for the training set
+  val model = LassoWithSGD.train(train, numIterations, stepSize, lambda) 
+   
+  // Evaluate model on test examples and compute test error
+  val valuesAndPreds = test.map { point =>
+     val prediction = model.predict(point.features)
+     (point.label, prediction)
+  }
+  
+  //calculate the mean squared error
+  val MSE = valuesAndPreds.map{ case(v, p) => math.pow((v - p), 2) }.mean()
 
-val global_mean = valuesAndPreds.map{ case(v, p) => v }.mean()
-val SQ_null = valuesAndPreds.map{ case(v,p) => math.pow((v - global_mean), 2) }.sum()
-val SQ = valuesAndPreds.map{ case(v, p) => math.pow((v - p), 2) }.sum()
-var R2 = (SQ_null - SQ) / SQ_null
-println("coefficient of determination by hand: " + R2)
+  //return the model and its test error
+  (model, MSE)
+}}
 
-// Instantiate metrics object
-val metrics = new RegressionMetrics(valuesAndPreds)
+//Average error:
+val avgError = modelErrors.map(_._2).reduce(_ + _) / modelErrors.length
 
-// Squared error
-println(s"MSE = ${metrics.meanSquaredError}")
-println(s"RMSE = ${metrics.rootMeanSquaredError}")
-
-// R-squared
-println(s"R-squared = ${metrics.r2}")
-
-// Mean absolute error
-println(s"MAE = ${metrics.meanAbsoluteError}")
-
-// Explained variance
-println(s"Explained variance = ${metrics.explainedVariance}")
-
-if(R2 > best_r2){
+if(avgError < min_error){
  best_lambda = lambda;
- best_r2 = R2;
+ min_error = avgError;
 }
 
 }
