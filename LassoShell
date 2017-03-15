@@ -103,7 +103,7 @@ fileNames(i) = fileName
 i=i+1
 }
 
-for(i <- 1 to numFiles){
+for(i <- 0 to (numFiles-1)){
   pw.write(fileNames(i)+";"+lambdas(i)+";"+mses(i))
 }
 pw.close
