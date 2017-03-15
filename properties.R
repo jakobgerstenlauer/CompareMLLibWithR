@@ -12,7 +12,7 @@ maxReplicatesLHC<-5
 
 #TODO Check if the sample size is correct!
 #number of samples from the LHC 
-SampleSize<-16;#TODO 200
+SampleSize<-64;
 NumVariables<-4;   
 
 #Now define the ranges for all four parameters of the LHC:
