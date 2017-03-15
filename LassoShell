@@ -38,7 +38,7 @@ var i = 0;
 for( fileName <- fileNames){
 
 println("Reading data from file: " + fileName)
-val data = sc.textFile(path + fileName.toString).filter(!isHeader(_))
+val data = sc.textFile("file://" + path + fileName).filter(!isHeader(_))
 
 val parsedData = data.map { line =>
   val parts = line.split(';')
