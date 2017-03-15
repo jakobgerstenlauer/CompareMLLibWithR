@@ -22,7 +22,7 @@ def isHeader(line: String) = line.contains("output");
 var path = "/home/.../data/"
 
 //read a file that contains the names of all input files
-var fileNames:Array[String] = Source.fromFile(path + "fileNames").getLines.toArray
+var fileNames:Array[String] = Source.fromFile(path + "fileNames.txt").getLines.toArray
 val numFiles = fileNames.length
 
 //new log file with results for each file
