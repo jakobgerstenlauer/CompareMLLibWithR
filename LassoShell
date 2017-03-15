@@ -22,7 +22,7 @@ var path = "file:///home/.../data/"
 
 //read a file that contains the names of all input files
 val dataFileNames = sc.textFile(path + "fileNames.txt")
-val numFiles = dataFileNames.count()
+val numFiles = dataFileNames.count().toInt
 
 //new log file with results for each file
 val pw = new PrintWriter(new File("Results.txt" ))
