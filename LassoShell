@@ -100,7 +100,7 @@ if(avgError < min_error){
 lambdas(i) = best_lambda
 mses(i) = min_error
 fileNames(i) = fileName
-i++
+i=i+1
 }
 
 for(i <- 1 to numFiles){
