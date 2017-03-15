@@ -23,6 +23,11 @@ var path = "file:///home/.../data/"
 //read a file that contains the names of all input files
 val dataFileNames = sc.textFile(path + "fileNames.txt")
 
+//new log file with results for each file
+val pw = new PrintWriter(new File("Results.txt" ))
+//write header
+pw.write("inputFile;lambda;MSE")
+
 //iterate over the file names:
 for( fileName <- dataFileNames){
 
@@ -42,11 +47,6 @@ val stepSize = 0.01
 //and the associated coefficient of determination:
 var best_lambda = -1.0
 var min_error = 100000.0
-
-//new log file with results for each file
-val pw = new PrintWriter(new File("Results.txt" ))
-//write header
-pw.write("inputFile;lambda;MSE")
 
 //Loop over a grid of values for lambda.
 for( x <- 1 to 10){
