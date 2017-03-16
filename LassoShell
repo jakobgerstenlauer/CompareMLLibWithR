@@ -17,11 +17,10 @@ import scala.io.Source
 import scala.collection.mutable.Map
  
 //TODO Define the path to your data:
-//var path = "/home/.../data/"
-var path = "/home/german/Documents/CLC-Project1/spark-2.1.0-bin-hadoop2.7/data/rdatasets/"
+var path = "/home/.../data/"
 
 //TODO set to 10000
-val numIterations = 1000
+val numIterations = 500
 
 //Check if a input line represents the header of the input file.
 def isHeader(line: String) = line.contains("output");
@@ -46,7 +45,7 @@ def runLasso(fileName: String, path: String, numIterations: Int) = {
 	var min_error = 100000.0
 
 	//Loop over a grid of values for lambda.
-	for (x <- 1 to 10) {
+	for (x <- 5 to 10) {
 		var lambda = 1.0/(x*x)
 		//println("Lambda: " + lambda)
 
