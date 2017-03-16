@@ -17,13 +17,13 @@ import scala.io.Source
 import scala.collection.mutable.Map
  
 //TODO Define the path to your data:
-//var path = "file:///home/.../data/"
+//var path = "/home/.../data/"
 
 //Check if a input line represents the header of the input file.
 def isHeader(line: String) = line.contains("output");
 
 def runLasso(fileName: String, path: String){
-val data = sc.textFile(path + fileName).filter(!isHeader(_))
+val data = sc.textFile("file://" + path + fileName).filter(!isHeader(_))
 
 val parsedData = data.map { line =>
   val parts = line.split(';')
