@@ -97,8 +97,10 @@ val mean_squared_error_map = scala.collection.mutable.Map[String, Double]()
 
 //iterate over the file names:
 for( fileName <- fileNames){
-   val result = runLasso(fileName, path, numIterations)
-   mean_squared_error_map += (result._1 -> result._2)
+    runLasso(fileName, path, numIterations)
+   //TODO: write output tuple (filename, mean squared error) into map!
+   //val result = runLasso(fileName, path, numIterations)
+   //mean_squared_error_map += (result._1 -> result._2)
 }
 
 //new log file with results for each file
