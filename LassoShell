@@ -18,10 +18,10 @@ import scala.collection.mutable.Map
  
 //TODO Define the path to your data:
 //var path = "/home/.../data/"
-//var path = "/home/german/Documents/CLC-Project1/CompareMLLibWithR/"
+var path = "/home/german/Documents/CLC-Project1/spark-2.1.0-bin-hadoop2.7/data/rdatasets/"
 
 //TODO set to 10000
-val numIterations = 2
+val numIterations = 1000
 
 //Check if a input line represents the header of the input file.
 def isHeader(line: String) = line.contains("output");
@@ -53,7 +53,7 @@ def runLasso(fileName: String, path: String, numIterations: Int) = {
 		//def kFold[T](rdd: RDD[T], numFolds: Int, seed: Int)(implicit arg0: ClassTag[T]): Array[(RDD[T], RDD[T])]
 		//Return a k element array of pairs of RDDs with the first element of each pair containing the training data, 
 		//a complement of the validation data and the second element, the validation data, containing a unique 1/kth of the data.
-		var numberOfFolds = 10
+		var numberOfFolds = 5
 		var seed = 21937
 		val dataInFolds = MLUtils.kFold(parsedData, numberOfFolds, seed)
 
@@ -99,7 +99,8 @@ val best_lambda_map = scala.collection.mutable.Map[String, Double]()
 
 //iterate over the file names:
 for (fileName <- fileNames) {
-   val (currentFileName, meanSquaredError, best_lambda, sparsity) = runLasso(fileName, path, numIterations)
+   //val (currentFileName, meanSquaredError, best_lambda, sparsity) = runLasso(fileName, path, numIterations)
+   val (currentFileName, meanSquaredError, best_lambda) = runLasso(fileName, path, numIterations)
    mean_squared_error_map += (currentFileName.toString -> meanSquaredError.toDouble)
    best_lambda_map += (currentFileName.toString -> best_lambda.toDouble)
    //sparsity_map += (currentFileName.toString -> sparsity.toInt)
@@ -109,11 +110,17 @@ for (fileName <- fileNames) {
 val pw = new PrintWriter(new File("Results.txt" ))
 //write header
 pw.write("inputFile;MSE;lambda")
+pw.println
 //pw.write("inputFile;MSE;lambda;NrOfCoefficients")
 for((key,value)<-mean_squared_error_map){
-	val lambda = best_lambda_map.get(key)	
-	val NrOfCoefficients = sparsity_map.get(key)
-	pw.write(s"$key,$value,$lambda")
+	best_lambda_map.get(key) match {
+        case Some(lambda) => pw.write(s"$key,$value,$lambda")
+        case None => pw.write(s"$key,$value,_")
+    }
+	//val lambda = best_lambda_map.get(key)	
+	//val NrOfCoefficients = sparsity_map.get(key)
+	
+	
 	//pw.write(s"$key,$value,$lambda,$NrOfCoefficients")
 	pw.println
 }
