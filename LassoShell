@@ -98,9 +98,12 @@ val best_lambda_map = scala.collection.mutable.Map[String, Double]()
 
 //iterate over the file names:
 for( fileName <- fileNames){
-   val (currentFileName, meanSquaredError, best_lambda) = runLasso(fileName, path, numIterations)
-   mean_squared_error_map += (fileName -> meanSquaredError)
-   best_lambda_map += (fileName -> best_lambda)
+   var currentFileName : String = _
+   var meanSquaredError : Double = _
+   var best_lambda : Double = _
+   (currentFileName, meanSquaredError, best_lambda) = runLasso(fileName, path, numIterations)
+   mean_squared_error_map += (currentFileName -> meanSquaredError)
+   best_lambda_map += (currentFileName -> best_lambda)
 }
 
 //new log file with results for each file
