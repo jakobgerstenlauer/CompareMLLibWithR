@@ -88,15 +88,14 @@ if(avgError < min_error){
 //read a file that contains the names of all input files
 var fileNames:Array[String] = Source.fromFile(path + "fileNames.txt").getLines.toArray
 val numFiles = fileNames.length
-
-//new log file with results for each file
-val pw = new PrintWriter(new File("Results.txt" ))
-//write header
-pw.write("inputFile;lambda;MSE")
-
 val mean_squared_error_map = scala.collection.mutable.Map[String, Double]()
 
 //iterate over the file names:
 for( fileName <- fileNames){
    mean_squared_error_map += runLasso(fileName: String, path: String)
 }
+
+//new log file with results for each file
+val pw = new PrintWriter(new File("Results.txt" ))
+//write header
+pw.write("inputFile;lambda;MSE")
