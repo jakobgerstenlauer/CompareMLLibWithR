@@ -26,7 +26,10 @@ val numIterations = 2
 def isHeader(line: String) = line.contains("output");
 
 def runLasso(fileName: String, path: String, numIterations: Double){
-val data = sc.textFile("file://" + path + fileName).filter(!isHeader(_))
+
+var fileNameCleaned = fileName.replaceAll(" ", "").replaceAll("\r", "").replaceAll("\n", "")
+
+val data = sc.textFile("file://" + path + fileNameCleaned).filter(!isHeader(_))
 
 val parsedData = data.map { line =>
   val parts = line.split(';')
