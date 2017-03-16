@@ -16,7 +16,7 @@ import java.io._
 import scala.io.Source
  
 //TODO Define the path to your data:
-//var path = "/home/.../data/"
+//var path = "file:///home/.../data/"
 
 //Check if a input line represents the header of the input file.
 def isHeader(line: String) = line.contains("output");
@@ -38,7 +38,7 @@ var i = 0;
 for( fileName <- fileNames){
 
 println("Reading data from file: " + fileName)
-val data = sc.textFile("file://" + path + fileName).filter(!isHeader(_))
+val data = sc.textFile(path + fileName).filter(!isHeader(_))
 
 val parsedData = data.map { line =>
   val parts = line.split(';')
