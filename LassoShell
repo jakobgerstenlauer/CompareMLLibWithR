@@ -19,10 +19,13 @@ import scala.collection.mutable.Map
 //TODO Define the path to your data:
 //var path = "/home/.../data/"
 
+#TODO set to 10000
+val numIterations = 2
+
 //Check if a input line represents the header of the input file.
 def isHeader(line: String) = line.contains("output");
 
-def runLasso(fileName: String, path: String){
+def runLasso(fileName: String, path: String, numIterations: Double){
 val data = sc.textFile("file://" + path + fileName).filter(!isHeader(_))
 
 val parsedData = data.map { line =>
@@ -31,7 +34,6 @@ val parsedData = data.map { line =>
 }.cache()
 
 // Building the model
-val numIterations = 10000
 val stepSize = 0.01
 
 //Store the optimal value of the regularization parameter lambda 
@@ -82,7 +84,7 @@ if(avgError < min_error){
 
 }
 //return the optimal lambda and the mean squared error
-(fileName, min_error)
+(fileName:String, min_error:Double)
 }
 
 //read a file that contains the names of all input files
@@ -92,7 +94,8 @@ val mean_squared_error_map = scala.collection.mutable.Map[String, Double]()
 
 //iterate over the file names:
 for( fileName <- fileNames){
-   mean_squared_error_map += runLasso(fileName: String, path: String)
+   val result = runLasso(fileName, path, numIterations)
+   mean_squared_error_map += (result._1 -> result._2)
 }
 
 //new log file with results for each file
