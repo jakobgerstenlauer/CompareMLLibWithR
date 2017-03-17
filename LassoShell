@@ -15,13 +15,13 @@ import org.apache.spark.mllib.util.MLUtils
 import java.io._
 import scala.io.Source
 import scala.collection.mutable.Map
- 
+
 //TODO Define the path to your data:
 //var path = "/home/.../data/"
 var path = "/home/german/Documents/CLC-Project1/spark-2.1.0-bin-hadoop2.7/data/rdatasets/"
 
 //TODO set to 10000
-val numIterations = 1000
+val numIterations = 500
 
 //Check if a input line represents the header of the input file.
 def isHeader(line: String) = line.contains("output");
@@ -46,7 +46,8 @@ def runLasso(fileName: String, path: String, numIterations: Int) = {
 	var min_error = 100000.0
 
 	//Loop over a grid of values for lambda.
-	for (x <- 1 to 10) {
+	val rang = List(2, 10, 100)
+	for (x <- rang) {
 		var lambda = 1.0/(x*x)
 		//println("Lambda: " + lambda)
 
@@ -85,43 +86,54 @@ def runLasso(fileName: String, path: String, numIterations: Int) = {
 		}
 
 	}
+	System.gc()
 	//return a tuple with the file name, and the mean squared error for the optimal lambda:
 	(fileName, min_error, best_lambda)
 	//(fileName, min_error, best_lambda, sparsity)
 }
+	
+try {
+	//read a file that contains the names of all input files
+	var fileNames:Array[String] = Source.fromFile(path + "fileNames.txt").getLines.toArray
+	val numFiles = fileNames.length
+	val mean_squared_error_map = scala.collection.mutable.Map[String, Double]()
+	val best_lambda_map = scala.collection.mutable.Map[String, Double]()
+	//val sparsity_map = scala.collection.mutable.Map[String, Int]()
 
-//read a file that contains the names of all input files
-var fileNames:Array[String] = Source.fromFile(path + "fileNames.txt").getLines.toArray
-val numFiles = fileNames.length
-val mean_squared_error_map = scala.collection.mutable.Map[String, Double]()
-val best_lambda_map = scala.collection.mutable.Map[String, Double]()
-//val sparsity_map = scala.collection.mutable.Map[String, Int]()
-
-//iterate over the file names:
-for (fileName <- fileNames) {
-   //val (currentFileName, meanSquaredError, best_lambda, sparsity) = runLasso(fileName, path, numIterations)
-   val (currentFileName, meanSquaredError, best_lambda) = runLasso(fileName, path, numIterations)
-   mean_squared_error_map += (currentFileName.toString -> meanSquaredError.toDouble)
-   best_lambda_map += (currentFileName.toString -> best_lambda.toDouble)
-   //sparsity_map += (currentFileName.toString -> sparsity.toInt)
+	//iterate over the file names:
+	for (fileName <- fileNames) {
+	   //val (currentFileName, meanSquaredError, best_lambda, sparsity) = runLasso(fileName, path, numIterations)
+	   val (currentFileName, meanSquaredError, best_lambda) = runLasso(fileName, path, numIterations)
+	   mean_squared_error_map += (currentFileName.toString -> meanSquaredError.toDouble)
+	   best_lambda_map += (currentFileName.toString -> best_lambda.toDouble)
+	   //sparsity_map += (currentFileName.toString -> sparsity.toInt)
+	}
+} catch {
+	case e : Throwable => println("first try catch " + e.getMessage)
 }
 
-//new log file with results for each file
-val pw = new PrintWriter(new File("Results.txt" ))
-//write header
-pw.write("inputFile;MSE;lambda")
-pw.println
-//pw.write("inputFile;MSE;lambda;NrOfCoefficients")
-for((key,value)<-mean_squared_error_map){
-	best_lambda_map.get(key) match {
-        case Some(lambda) => pw.write(s"$key,$value,$lambda")
-        case None => pw.write(s"$key,$value,_")
-    }
-	//val lambda = best_lambda_map.get(key)	
-	//val NrOfCoefficients = sparsity_map.get(key)
-	
-	
-	//pw.write(s"$key,$value,$lambda,$NrOfCoefficients")
+try {
+	//new log file with results for each file
+	val pw = new PrintWriter(new File("Results.txt" ))
+	//write header
+	pw.write("inputFile;MSE;lambda")
 	pw.println
+	//pw.write("inputFile;MSE;lambda;NrOfCoefficients")
+	for((key,value)<-mean_squared_error_map){
+		best_lambda_map.get(key) match {
+			case Some(lambda) => pw.write(s"$key,$value,$lambda")
+			case None => pw.write(s"$key,$value,_")
+		}
+		//val lambda = best_lambda_map.get(key)	
+		//val NrOfCoefficients = sparsity_map.get(key)
+		
+		
+		//pw.write(s"$key,$value,$lambda,$NrOfCoefficients")
+		pw.println
+	}
+	pw.close()
+} catch {
+	case e : Throwable => println("second try catch " + e.getMessage)
+} finally {
+	pw.close()
 }
-pw.close()
