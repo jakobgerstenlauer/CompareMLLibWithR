@@ -27,16 +27,13 @@ val numIterations = 500
 def isHeader(line: String) = line.contains("output");
 
 def runLasso(fileName: String, path: String, numIterations: Int) = {
-
 	var fileNameCleaned = fileName.replaceAll(" ", "").replaceAll("\r", "").replaceAll("\n", "")
-
 	val data = sc.textFile("file://" + path + fileNameCleaned).filter(!isHeader(_))
-
 	val parsedData = data.map { line =>
 		val parts = line.split(';')
 		LabeledPoint(parts(0).toDouble, Vectors.dense(parts(1).split(' ').map(_.toDouble)))
 	}.cache()
-
+	
 	// Building the model
 	val stepSize = 0.01
 
@@ -91,8 +88,7 @@ def runLasso(fileName: String, path: String, numIterations: Int) = {
 	(fileName, min_error, best_lambda)
 	//(fileName, min_error, best_lambda, sparsity)
 }
-	
-
+		
 	//read a file that contains the names of all input files
 	var fileNames:Array[String] = Source.fromFile(path + "fileNames.txt").getLines.toArray
 	val numFiles = fileNames.length
@@ -112,9 +108,6 @@ def runLasso(fileName: String, path: String, numIterations: Int) = {
 		case e : Throwable => println("first try catch " + e.getMessage)
 	   }
 	}
-
-
-try {
 	//new log file with results for each file
 	val pw = new PrintWriter(new File("Results.txt" ))
 	//write header
@@ -126,16 +119,6 @@ try {
 			case Some(lambda) => pw.write(s"$key,$value,$lambda")
 			case None => pw.write(s"$key,$value,_")
 		}
-		//val lambda = best_lambda_map.get(key)	
-		//val NrOfCoefficients = sparsity_map.get(key)
-		
-		
-		//pw.write(s"$key,$value,$lambda,$NrOfCoefficients")
 		pw.println
 	}
 	pw.close()
-} catch {
-	case e : Throwable => println("second try catch " + e.getMessage)
-} finally {
-	pw.close()
-}
