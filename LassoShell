@@ -18,7 +18,7 @@ import scala.collection.mutable.Map
 
 //TODO Define the path to your data:
 //var path = "/home/.../data/"
-var path = "/home/german/Documents/CLC-Project1/spark-2.1.0-bin-hadoop2.7/data/rdatasets/"
+//var path = "/home/german/Documents/CLC-Project1/spark-2.1.0-bin-hadoop2.7/data/rdatasets/"
 
 //TODO set to 10000
 val numIterations = 500
