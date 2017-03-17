@@ -18,7 +18,7 @@ import scala.collection.mutable.Map
 
 //TODO Define the path to your data:
 //var path = "/home/.../data/"
-//var path = "/home/german/Documents/CLC-Project1/spark-2.1.0-bin-hadoop2.7/data/rdatasets/"
+var path = "/home/german/Documents/CLC-Project1/spark-2.1.0-bin-hadoop2.7/data/rdatasets/"
 
 //TODO set to 10000
 val numIterations = 500
@@ -43,9 +43,10 @@ def runLasso(fileName: String, path: String, numIterations: Int) = {
 	var min_error = 100000.0
 
 	//Loop over a grid of values for lambda.
-	val rang = List(2, 10, 100)
-	for (x <- rang) {
-		var lambda = 1.0/(x*x)
+	val rang = List(3, 1, 0.5, 0.1, 0.01)
+	//val rang = List(2, 10, 100)
+	for (lambda <- rang) {
+		//var lambda = x
 		//println("Lambda: " + lambda)
 
 		//def kFold[T](rdd: RDD[T], numFolds: Int, seed: Int)(implicit arg0: ClassTag[T]): Array[(RDD[T], RDD[T])]
