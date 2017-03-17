@@ -18,7 +18,7 @@ import scala.collection.mutable.Map
 
 //TODO Define the path to your data:
 //var path = "/home/.../data/"
-var path = "/home/german/Documents/CLC-Project1/spark-2.1.0-bin-hadoop2.7/data/rdatasets/"
+//var path = "/home/german/Documents/CLC-Project1/spark-2.1.0-bin-hadoop2.7/data/rdatasets/"
 
 //TODO set to 10000
 val numIterations = 500
@@ -92,7 +92,7 @@ def runLasso(fileName: String, path: String, numIterations: Int) = {
 	//(fileName, min_error, best_lambda, sparsity)
 }
 	
-try {
+
 	//read a file that contains the names of all input files
 	var fileNames:Array[String] = Source.fromFile(path + "fileNames.txt").getLines.toArray
 	val numFiles = fileNames.length
@@ -102,15 +102,17 @@ try {
 
 	//iterate over the file names:
 	for (fileName <- fileNames) {
+	   try {
 	   //val (currentFileName, meanSquaredError, best_lambda, sparsity) = runLasso(fileName, path, numIterations)
 	   val (currentFileName, meanSquaredError, best_lambda) = runLasso(fileName, path, numIterations)
 	   mean_squared_error_map += (currentFileName.toString -> meanSquaredError.toDouble)
 	   best_lambda_map += (currentFileName.toString -> best_lambda.toDouble)
 	   //sparsity_map += (currentFileName.toString -> sparsity.toInt)
+	   } catch {
+		case e : Throwable => println("first try catch " + e.getMessage)
+	   }
 	}
-} catch {
-	case e : Throwable => println("first try catch " + e.getMessage)
-}
+
 
 try {
 	//new log file with results for each file
