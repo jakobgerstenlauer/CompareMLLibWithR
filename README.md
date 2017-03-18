@@ -22,3 +22,5 @@ CompareResultsLasso_CompareSparkvsR.csv
                   A csv file with the combined results of the R and Spark simulation runs.
                   
 analyzeResults.R  A script to analyze the above scv file.
+
+Spark_versus_R.pdf A poster that summerizes the results of the project.
