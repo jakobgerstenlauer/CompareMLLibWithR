@@ -10,10 +10,15 @@ Our objective is to compare the two algorithms in terms of:
 
 The following files are part of this project:
 
-CC.R              The main R script that both creates the input files and analyses each file with the cv.glmnet() function.<\p>
-properties.R      A properties file that controls the latin hypercube sampling. <\p>
-workingDir.R      This file is not submitted because it contains the hardcoded path variables of the local user.<\p>
-ScalaShell.scala  A scala script file that can be run in the Spark shell.<\p>
-CompareResultsLasso_CompareSparkvsR.csv<\p>
-                  A csv file with the combined results of the R and Spark simulation runs.<\p>
-analyzeResults.R  A script to analyze the above scv file.<\p>
+CC.R              The main R script that both creates the input files and analyses each file with the cv.glmnet() function.
+
+properties.R      A properties file that controls the latin hypercube sampling. 
+
+workingDir.R      This file is not submitted because it contains the hardcoded path variables of the local user.
+
+ScalaShell.scala  A scala script file that can be run in the Spark shell.
+
+CompareResultsLasso_CompareSparkvsR.csv
+                  A csv file with the combined results of the R and Spark simulation runs.
+                  
+analyzeResults.R  A script to analyze the above scv file.
