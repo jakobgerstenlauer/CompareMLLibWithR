@@ -1,2 +1,2 @@
 # CompareMLLibWithR
-In this project we compare the results of algorithms of the Spark MLib library with standard R packages.
+In this project, we compare the results of the Lasso L1 regression algorithm as implemented in the Spark MLlib library with the R package glmnet.
