@@ -1,0 +1,17 @@
+inputFile,MSE_Spark,lambda_Spark,MSE_R,lambda_R,signal.to.noise.ratio,num.vars,num.observations,polynomial.degree
+data_signal_to_noise_0.042_N_253_D_81_poly_2_replicate_1.csv,1549.705564,3,1170.028272,2.656087783,0.042,81,253,2
+data_signal_to_noise_0.107_N_198_D_13_poly_1_replicate_1.csv,7.585180724,0.01,0.6920957329,0.01,0.107,13,198,1
+data_signal_to_noise_0.158_N_23_D_2_poly_2_replicate_1.csv,1.932018088,0.01,0.8438960413,0.04037017259,0.158,2,23,2
+data_signal_to_noise_0.212_N_78_D_11_poly_1_replicate_1.csv,5.108513074,0.01,0.5037288765,0.04037017259,0.212,11,78,1
+data_signal_to_noise_0.298_N_104_D_5_poly_2_replicate_1.csv,16.84498865,0.01,10.30230653,0.01,0.298,5,104,2
+data_signal_to_noise_0.337_N_180_D_65_poly_2_replicate_1.csv,1807.797173,3,1655.539587,8.111308308,0.337,65,180,2
+data_signal_to_noise_0.407_N_108_D_6_poly_1_replicate_1.csv,2.262500886,0.01,0.3122062797,0.01,0.407,6,108,1
+data_signal_to_noise_0.482_N_220_D_18_poly_1_replicate_1.csv,8.197130452,0.01,0.2379727105,0.01,0.482,18,220,1
+data_signal_to_noise_0.551_N_43_D_8_poly_1_replicate_1.csv,0.9254952129,0.01,0.1150167451,0.01,0.551,8,43,1
+data_signal_to_noise_0.572_N_59_D_4_poly_1_replicate_1.csv,1.118485845,0.01,0.2329433492,0.01,0.572,4,59,1
+data_signal_to_noise_0.674_N_194_D_11_poly_2_replicate_1.csv,87.07485803,0.1,84.23396707,0.8697490026,0.674,11,194,2
+data_signal_to_noise_0.731_N_138_D_24_poly_2_replicate_1.csv,219.2367552,0.01,146.4497577,0.6579332247,0.731,24,138,2
+data_signal_to_noise_0.786_N_234_D_23_poly_2_replicate_1.csv,524.8209398,0.01,344.5946158,0.215443469,0.786,23,234,2
+data_signal_to_noise_0.839_N_164_D_17_poly_1_replicate_1.csv,7.046267133,0.01,0.02217283474,0.01,0.839,17,164,1
+data_signal_to_noise_0.895_N_63_D_7_poly_2_replicate_1.csv,115.0732469,0.01,66.08592793,0.6579332247,0.895,7,63,2
+data_signal_to_noise_0.97_N_131_D_127_poly_1_replicate_1.csv,99.11208344,0.01,0.0804365372,0.01,0.97,127,131,1
