@@ -16,6 +16,6 @@ File | Content
 *properties.R*|A properties file that controls the latin hypercube sampling. 
 *workingDir.R*|This file is not submitted because it contains the hardcoded path variables of the local user.
 *ScalaShell.scala*|A scala script file that can be run in the Spark shell.
-*CompareResultsLasso_CompareSparkvsR.csv*|A csv file with the combined results of the R and Spark simulation runs.                  
+*CompareResultsLasso_CompareSparkvsR.csv*|A csv file with the combined results of the R and Spark simulations.                  
 *analyzeResults.R*|A script to analyze the above scv file.
 *Spark_versus_R.pdf*|A poster that summerizes the results of the project.
